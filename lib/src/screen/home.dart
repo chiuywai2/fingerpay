@@ -15,57 +15,125 @@ class Fingerpay extends StatefulWidget {
   _FingerpayState createState() => _FingerpayState();
 }
 
-const List<String> tabNames = const <String>[
-  'Dashboard',
-  'Pay',
-  'History',
-  'Account',
-  'Profile',
-  'TopUp',
-  'Cards',
-  'Settings'
-];
-
 class _FingerpayState extends State<Fingerpay> {
-  int _screen = 0;
+  PageController _myPage = PageController(initialPage: 0);
   double money = 0.00;
   @override
   Widget build(BuildContext context) {
-    return new DefaultTabController(
-        length: tabNames.length,
-        child: new Scaffold(
-          backgroundColor: white,
-          body: new TabBarView(children: [
-            Dashboard(),
-            Pay(),
-            History(),
-            Account(),
-            Profile(),
-            TopUp(),
-            Cards(),
-            Setting(),
-          ]),
-          bottomNavigationBar: new Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              new AnimatedCrossFade(
-                firstChild: new Material(
-                  color: Theme.of(context).primaryColor,
-                  child: new TabBar(
-                      isScrollable: true,
-                      tabs: new List.generate(tabNames.length, (index) {
-                        return new Tab(text: tabNames[index]);
-                      })),
+    return WillPopScope(
+      onWillPop: () async => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                  title: Text('Are you sure you want to quit?'),
+                  actions: <Widget>[
+                    RaisedButton(
+                        child: Text('Quit'),
+                        onPressed: () => Navigator.of(context).pop(true)),
+                    RaisedButton(
+                        child: Text('Cancel'),
+                        onPressed: () => Navigator.of(context).pop(false)),
+                  ])),
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          height: 65.0,
+          width: 65.0,
+          child: FittedBox(
+              child: FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                _myPage.jumpToPage(4);
+              });
+            },
+            child: Icon(
+              Icons.attach_money,
+              color: Colors.white,
+            ),
+          )),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  iconSize: 30.0,
+                  padding: EdgeInsets.only(left: 28.0),
+                  icon: Icon(Icons.home),
+                  onPressed: () {
+                    setState(() {
+                      _myPage.jumpToPage(0);
+                    });
+                  },
                 ),
-                secondChild: new Container(),
-                crossFadeState: _screen == 0
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 300),
-              ),
-            ],
+                IconButton(
+                    iconSize: 30.0,
+                    padding: EdgeInsets.only(right: 28.0),
+                    icon: Icon(Icons.person),
+                    onPressed: () {
+                      setState(() {
+                        _myPage.jumpToPage(1);
+                      });
+                    }),
+                IconButton(
+                    iconSize: 30.0,
+                    padding: EdgeInsets.only(left: 28.0),
+                    icon: Icon(Icons.history),
+                    onPressed: () {
+                      setState(() {
+                        _myPage.jumpToPage(2);
+                      });
+                    }),
+                IconButton(
+                    iconSize: 30.0,
+                    padding: EdgeInsets.only(right: 28.0),
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      setState(() {
+                        _myPage.jumpToPage(3);
+                      });
+                    }),
+              ],
+            ),
           ),
-        ));
+        ),
+        body: PageView(
+          controller: _myPage,
+          onPageChanged: (int) {
+            print('Page Changes to index $int');
+          },
+          children: <Widget>[
+            Center(
+              child: Container(
+                child: Dashboard(),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: Account(),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: History(),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: Setting(),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: Pay(),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

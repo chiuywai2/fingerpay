@@ -1,6 +1,6 @@
+import 'package:fingerpay/src/widget/profileIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
-import 'package:fingerpay/src/widget/bottomNavigation.dart';
 import 'package:fingerpay/src/common.dart';
 import 'package:fingerpay/src/widget/cards.dart';
 import 'package:fingerpay/src/models/hex_color.dart';
@@ -11,11 +11,10 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  double money = 50.00;
+  double money = 0.00;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
       body: Container(
         child: Stack(children: <Widget>[
           Topbar(),
@@ -31,19 +30,16 @@ class _DashboardState extends State<Dashboard> {
                           text: TextSpan(children: [
                         TextSpan(
                             text: "\nTotal Balance\n",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 18)),
+                            style: TextStyle(color: white, fontSize: 18)),
                         TextSpan(
                             text: "\$ ",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 30)),
+                            style: TextStyle(color: white, fontSize: 30)),
                         TextSpan(
                             text: "1,234.00 \n",
                             style: TextStyle(color: white, fontSize: 36)),
                         TextSpan(
                             text: " \nYour cards",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 18)),
+                            style: TextStyle(color: white, fontSize: 18)),
                       ])),
                     ),
                     IconButton(
@@ -101,24 +97,9 @@ class _DashboardState extends State<Dashboard> {
                           radius: 25,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage("images/p2.jpg"),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage("images/p3.jpg"),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage("images/p1.jpg"),
-                        ),
-                      ),
+                      ProfileIcon(image: "p2.jpg"),
+                      ProfileIcon(image: "p3.jpg"),
+                      ProfileIcon(image: "p1.jpg"),
                     ],
                   ),
                 ),
@@ -173,7 +154,6 @@ class _DashboardState extends State<Dashboard> {
           ),
         ]),
       ),
-      bottomNavigationBar: BottomNavigation(),
     );
   }
 
@@ -204,7 +184,7 @@ class _DashboardState extends State<Dashboard> {
                 Container(
                   alignment: Alignment.center,
                   child: Text(
-                    "Jason Martin",
+                    "Bob Chong",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -277,7 +257,7 @@ class _DashboardState extends State<Dashboard> {
                     child: Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: HexColor("60282e"),
+                          color: HexColor("0074ad"),
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Padding(

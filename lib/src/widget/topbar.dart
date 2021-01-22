@@ -15,7 +15,7 @@ class _TopbarState extends State<Topbar> {
           Container(
             height: 300,
             decoration: BoxDecoration(
-                color: HexColor("e60000"),
+                color: HexColor("0074ad"),
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(60),
                   bottomLeft: Radius.circular(60),

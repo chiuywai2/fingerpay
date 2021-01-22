@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/models/hex_color.dart';
-
-import '../common.dart';
+import 'package:fingerpay/src/common.dart';
 
 class CreditCard extends StatelessWidget {
   final String color;

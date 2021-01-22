@@ -11,11 +11,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'FingerPay',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Home Page'),
+      home: Fingerpay(),
     );
   }
 }

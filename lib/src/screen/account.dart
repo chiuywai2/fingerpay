@@ -45,7 +45,9 @@ class _AccountState extends State<Account> {
                           color: white,
                           size: 40,
                         ),
-                        onPressed: () {})
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
                   ],
                 ),
               ],

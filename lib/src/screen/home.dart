@@ -5,13 +5,13 @@ import 'package:fingerpay/src/screen/history.dart';
 import 'package:fingerpay/src/screen/account.dart';
 import 'package:fingerpay/src/screen/setting.dart';
 
-class Fingerpay extends StatefulWidget {
-  Fingerpay({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
   @override
-  _FingerpayState createState() => _FingerpayState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _FingerpayState extends State<Fingerpay> {
+class _HomePageState extends State<HomePage> {
   int selectedIdx = 0;
   PageController _myPage = PageController(initialPage: 0);
   double money = 0.00;

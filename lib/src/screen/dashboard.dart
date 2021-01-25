@@ -49,7 +49,9 @@ class _DashboardState extends State<Dashboard> {
                           color: white,
                           size: 40,
                         ),
-                        onPressed: () {})
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
                   ],
                 ),
                 SizedBox(

@@ -46,7 +46,9 @@ class _HistoryState extends State<History> {
                           color: white,
                           size: 40,
                         ),
-                        onPressed: () {})
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
                   ],
                 ),
                 SizedBox(

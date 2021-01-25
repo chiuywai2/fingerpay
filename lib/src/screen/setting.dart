@@ -51,7 +51,9 @@ class _SettingState extends State<Setting> {
                           color: white,
                           size: 40,
                         ),
-                        onPressed: () {})
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
                   ],
                 ),
               ],

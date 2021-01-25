@@ -15,7 +15,9 @@ class _SettingState extends State<Setting> {
       backgroundColor: white,
       body: Container(
         child: Stack(children: <Widget>[
-          Topbar(),
+          Topbar(
+            barHeight: 150,
+          ),
           SafeArea(
             child: ListView(
               children: <Widget>[

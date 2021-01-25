@@ -1,3 +1,4 @@
+import 'package:fingerpay/src/widget/historyItem.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
@@ -15,7 +16,9 @@ class _HistoryState extends State<History> {
       backgroundColor: white,
       body: Container(
         child: Stack(children: <Widget>[
-          Topbar(),
+          Topbar(
+            barHeight: 150,
+          ),
           SafeArea(
             child: ListView(
               children: <Widget>[
@@ -28,19 +31,13 @@ class _HistoryState extends State<History> {
                           text: TextSpan(children: [
                         TextSpan(
                             text: "\nTotal Balance\n",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 18)),
+                            style: TextStyle(color: white, fontSize: 18)),
                         TextSpan(
                             text: "\$ ",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 30)),
+                            style: TextStyle(color: white, fontSize: 30)),
                         TextSpan(
                             text: "1,234.00 \n",
                             style: TextStyle(color: white, fontSize: 36)),
-                        TextSpan(
-                            text: " \nYour cards",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 18)),
                       ])),
                     ),
                     IconButton(
@@ -52,6 +49,99 @@ class _HistoryState extends State<History> {
                         onPressed: () {})
                   ],
                 ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "History",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 650,
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: <Widget>[
+                      HistoryItem(
+                          iconPath: 'p3.jpg',
+                          money: -430,
+                          name: 'Kenny Chiu',
+                          date: DateTime.parse("2020-12-24 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p3.jpg',
+                          money: -430,
+                          name: 'Kenny Chiu',
+                          date: DateTime.parse("2020-12-24 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p3.jpg',
+                          money: -430,
+                          name: 'Kenny Chiu',
+                          date: DateTime.parse("2020-12-24 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                      HistoryItem(
+                          iconPath: 'p2.jpg',
+                          money: -200,
+                          name: 'William',
+                          date: DateTime.parse("2020-12-20 20:18:00")),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

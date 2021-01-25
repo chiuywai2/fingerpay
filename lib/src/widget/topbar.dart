@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fingerpay/src/models/hex_color.dart';
 
 class Topbar extends StatefulWidget {
+  final double barHeight;
   @override
-  _TopbarState createState() => _TopbarState();
+  Topbar({this.barHeight});
+  State<StatefulWidget> createState() => _TopbarState();
 }
 
 class _TopbarState extends State<Topbar> {
@@ -13,7 +15,7 @@ class _TopbarState extends State<Topbar> {
       child: Stack(
         children: <Widget>[
           Container(
-            height: 300,
+            height: widget.barHeight,
             decoration: BoxDecoration(
                 color: HexColor("0074ad"),
                 borderRadius: BorderRadius.only(

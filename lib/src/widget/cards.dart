@@ -35,7 +35,7 @@ class CreditCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    "images/$image",
+                    "assets/images/$image",
                     width: 50,
                   ),
                 ),

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fingerpay/src/common.dart';
 import 'package:fingerpay/src/screen/dashboard.dart';
 import 'package:fingerpay/src/screen/pay.dart';
 import 'package:fingerpay/src/screen/history.dart';
 import 'package:fingerpay/src/screen/account.dart';
-import 'package:fingerpay/src/screen/profile.dart';
-import 'package:fingerpay/src/screen/topUp.dart';
-import 'package:fingerpay/src/screen/creditCards.dart';
 import 'package:fingerpay/src/screen/setting.dart';
 
 class Fingerpay extends StatefulWidget {
@@ -16,6 +12,7 @@ class Fingerpay extends StatefulWidget {
 }
 
 class _FingerpayState extends State<Fingerpay> {
+  int selectedIdx = 0;
   PageController _myPage = PageController(initialPage: 0);
   double money = 0.00;
   @override
@@ -42,12 +39,13 @@ class _FingerpayState extends State<Fingerpay> {
               child: FloatingActionButton(
             onPressed: () {
               setState(() {
-                _myPage.jumpToPage(4);
+                _myPage.jumpToPage(2);
+                selectedIdx = 2;
               });
             },
             child: Icon(
               Icons.attach_money,
-              color: Colors.white,
+              color: selectedIdx == 2 ? Colors.black : Colors.white,
             ),
           )),
         ),
@@ -60,40 +58,48 @@ class _FingerpayState extends State<Fingerpay> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
+                  color: selectedIdx == 0 ? Colors.black : Colors.grey,
                   iconSize: 30.0,
                   padding: EdgeInsets.only(left: 28.0),
                   icon: Icon(Icons.home),
                   onPressed: () {
                     setState(() {
+                      selectedIdx = 0;
                       _myPage.jumpToPage(0);
                     });
                   },
                 ),
                 IconButton(
+                    color: selectedIdx == 1 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
                     padding: EdgeInsets.only(right: 28.0),
                     icon: Icon(Icons.person),
                     onPressed: () {
                       setState(() {
+                        selectedIdx = 1;
                         _myPage.jumpToPage(1);
                       });
                     }),
                 IconButton(
+                    color: selectedIdx == 3 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
                     padding: EdgeInsets.only(left: 28.0),
                     icon: Icon(Icons.history),
                     onPressed: () {
                       setState(() {
-                        _myPage.jumpToPage(2);
+                        selectedIdx = 3;
+                        _myPage.jumpToPage(3);
                       });
                     }),
                 IconButton(
+                    color: selectedIdx == 4 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
                     padding: EdgeInsets.only(right: 28.0),
                     icon: Icon(Icons.settings),
                     onPressed: () {
                       setState(() {
-                        _myPage.jumpToPage(3);
+                        selectedIdx = 4;
+                        _myPage.jumpToPage(4);
                       });
                     }),
               ],
@@ -102,9 +108,9 @@ class _FingerpayState extends State<Fingerpay> {
         ),
         body: PageView(
           controller: _myPage,
-          onPageChanged: (int) {
-            print('Page Changes to index $int');
-          },
+          // onPageChanged: (int) {
+          //   selectedIdx = int;
+          // },
           children: <Widget>[
             Center(
               child: Container(
@@ -118,6 +124,11 @@ class _FingerpayState extends State<Fingerpay> {
             ),
             Center(
               child: Container(
+                child: Pay(),
+              ),
+            ),
+            Center(
+              child: Container(
                 child: History(),
               ),
             ),
@@ -126,11 +137,6 @@ class _FingerpayState extends State<Fingerpay> {
                 child: Setting(),
               ),
             ),
-            Center(
-              child: Container(
-                child: Pay(),
-              ),
-            )
           ],
         ),
       ),

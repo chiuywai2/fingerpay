@@ -15,7 +15,9 @@ class _AccountState extends State<Account> {
       backgroundColor: white,
       body: Container(
         child: Stack(children: <Widget>[
-          Topbar(),
+          Topbar(
+            barHeight: 150,
+          ),
           SafeArea(
             child: ListView(
               children: <Widget>[
@@ -28,19 +30,13 @@ class _AccountState extends State<Account> {
                           text: TextSpan(children: [
                         TextSpan(
                             text: "\nTotal Balance\n",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 18)),
+                            style: TextStyle(color: white, fontSize: 18)),
                         TextSpan(
                             text: "\$ ",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 30)),
+                            style: TextStyle(color: white, fontSize: 30)),
                         TextSpan(
                             text: "1,234.00 \n",
                             style: TextStyle(color: white, fontSize: 36)),
-                        TextSpan(
-                            text: " \nYour cards",
-                            style: TextStyle(
-                                color: white.withOpacity(0.5), fontSize: 18)),
                       ])),
                     ),
                     IconButton(

@@ -50,6 +50,20 @@ class _AccountState extends State<Account> {
                         })
                   ],
                 ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Personal Profile",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

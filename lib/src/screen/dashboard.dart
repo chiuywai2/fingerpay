@@ -20,42 +20,208 @@ class _DashboardState extends State<Dashboard> {
             barHeight: 300,
           ),
           SafeArea(
+              child: ListView(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "\nTotal Balance\n",
+                          style: TextStyle(color: white, fontSize: 18)),
+                      TextSpan(
+                          text: "\$ ",
+                          style: TextStyle(color: white, fontSize: 30)),
+                      TextSpan(
+                          text: "1,234.00 \n",
+                          style: TextStyle(color: white, fontSize: 36)),
+                    ])),
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: white,
+                        size: 40,
+                      ),
+                      onPressed: () {}),
+                ],
+              )
+            ],
+          )),
+          Padding(
+            padding: EdgeInsets.only(top: 130.0, right: 25.0, left: 25.0),
+            child: Container(
+              width: double.infinity,
+              height: 225.0,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        offset: Offset(0.0, 3.0),
+                        blurRadius: 15.0)
+                  ]),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.purple.withOpacity(0.1),
+                              child: IconButton(
+                                padding: EdgeInsets.all(15.0),
+                                icon: Icon(Icons.send),
+                                color: Colors.purple,
+                                iconSize: 30.0,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text('Send',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.orange.withOpacity(0.1),
+                              child: IconButton(
+                                padding: EdgeInsets.all(15.0),
+                                icon: Icon(Icons.border_color),
+                                color: Colors.orange,
+                                iconSize: 30.0,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text('Request',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.blue.withOpacity(0.1),
+                              child: IconButton(
+                                padding: EdgeInsets.all(15.0),
+                                icon: Icon(Icons.monetization_on),
+                                color: Colors.blue,
+                                iconSize: 30.0,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text('Top Up',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.pink.withOpacity(0.1),
+                              child: IconButton(
+                                padding: EdgeInsets.all(15.0),
+                                icon: Icon(Icons.receipt),
+                                color: Colors.pink,
+                                iconSize: 30.0,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text('Invoice',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.purpleAccent.withOpacity(0.1),
+                              child: IconButton(
+                                padding: EdgeInsets.all(15.0),
+                                icon: Icon(Icons.credit_card),
+                                color: Colors.purpleAccent,
+                                iconSize: 30.0,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text('My Card',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.deepPurple.withOpacity(0.1),
+                              child: IconButton(
+                                padding: EdgeInsets.all(15.0),
+                                icon: Icon(Icons.business),
+                                color: Colors.deepPurple,
+                                iconSize: 30.0,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text('Bank',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 360.0, right: 8.0, left: 8.0),
             child: ListView(
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "\nTotal Balance\n",
-                            style: TextStyle(color: white, fontSize: 18)),
-                        TextSpan(
-                            text: "\$ ",
-                            style: TextStyle(color: white, fontSize: 30)),
-                        TextSpan(
-                            text: "1,234.00 \n",
-                            style: TextStyle(color: white, fontSize: 36)),
-                        TextSpan(
-                            text: " \nYour cards",
-                            style: TextStyle(color: white, fontSize: 18)),
-                      ])),
+                      child: Text(
+                        "Your Card",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: white,
-                          size: 40,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        })
                   ],
-                ),
-                SizedBox(
-                  height: 5,
                 ),
                 Container(
                   height: 200,
@@ -178,7 +344,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ],
             ),
-          ),
+          )
         ]),
       ),
     );

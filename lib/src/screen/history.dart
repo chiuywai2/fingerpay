@@ -17,7 +17,7 @@ class _HistoryState extends State<History> {
       body: Container(
         child: Stack(children: <Widget>[
           Topbar(
-            barHeight: 150,
+            barHeight: 175,
           ),
           SafeArea(
             child: ListView(
@@ -46,9 +46,7 @@ class _HistoryState extends State<History> {
                           color: white,
                           size: 40,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        })
+                        onPressed: () {})
                   ],
                 ),
                 SizedBox(

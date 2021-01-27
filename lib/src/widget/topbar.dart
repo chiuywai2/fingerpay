@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fingerpay/src/models/hex_color.dart';
 
 class Topbar extends StatefulWidget {
   final double barHeight;
+
   @override
   Topbar({this.barHeight});
   State<StatefulWidget> createState() => _TopbarState();
@@ -11,20 +11,43 @@ class Topbar extends StatefulWidget {
 class _TopbarState extends State<Topbar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Container(
+    return Stack(
+      children: <Widget>[
+        ClipPath(
+          clipper: _AppBarClipper(),
+          child: Container(
+            padding: const EdgeInsets.only(top: 48),
+            color: Theme.of(context).primaryColor,
             height: widget.barHeight,
-            decoration: BoxDecoration(
-                color: HexColor("3884e0"),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(60),
-                  bottomLeft: Radius.circular(60),
-                )),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[],
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
+}
+
+class _AppBarClipper extends CustomClipper<Path> {
+  _AppBarClipper();
+
+  @override
+  Path getClip(Size size) {
+    double height = size.height;
+    Path path = Path();
+
+    path.moveTo(0, height - 40);
+    path.quadraticBezierTo(size.width / 2, height, size.width, height - 40);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

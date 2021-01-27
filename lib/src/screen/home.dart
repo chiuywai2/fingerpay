@@ -37,15 +37,10 @@ class _HomePageState extends State<HomePage> {
           width: 65.0,
           child: FittedBox(
               child: FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                _myPage.jumpToPage(2);
-                selectedIdx = 2;
-              });
-            },
+            onPressed: () {},
             child: Icon(
               Icons.attach_money,
-              color: selectedIdx == 2 ? Colors.black : Colors.white,
+              color: Colors.white,
             ),
           )),
         ),
@@ -81,25 +76,25 @@ class _HomePageState extends State<HomePage> {
                       });
                     }),
                 IconButton(
-                    color: selectedIdx == 3 ? Colors.black : Colors.grey,
+                    color: selectedIdx == 2 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
                     padding: EdgeInsets.only(left: 28.0),
                     icon: Icon(Icons.history),
                     onPressed: () {
                       setState(() {
-                        selectedIdx = 3;
-                        _myPage.jumpToPage(3);
+                        selectedIdx = 2;
+                        _myPage.jumpToPage(2);
                       });
                     }),
                 IconButton(
-                    color: selectedIdx == 4 ? Colors.black : Colors.grey,
+                    color: selectedIdx == 3 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
                     padding: EdgeInsets.only(right: 28.0),
                     icon: Icon(Icons.settings),
                     onPressed: () {
                       setState(() {
-                        selectedIdx = 4;
-                        _myPage.jumpToPage(4);
+                        selectedIdx = 3;
+                        _myPage.jumpToPage(3);
                       });
                     }),
               ],
@@ -120,11 +115,6 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: Container(
                 child: Account(),
-              ),
-            ),
-            Center(
-              child: Container(
-                child: Pay(),
               ),
             ),
             Center(

@@ -15,7 +15,9 @@ class _PayState extends State<Pay> {
       backgroundColor: white,
       body: Container(
         child: Stack(children: <Widget>[
-          Topbar(),
+          Topbar(
+            barHeight: 850,
+          ),
           SafeArea(
             child: ListView(
               children: <Widget>[

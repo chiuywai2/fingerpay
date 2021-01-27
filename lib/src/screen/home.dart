@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/screen/dashboard.dart';
-import 'package:fingerpay/src/screen/pay.dart';
 import 'package:fingerpay/src/screen/history.dart';
 import 'package:fingerpay/src/screen/account.dart';
 import 'package:fingerpay/src/screen/setting.dart';
+import 'package:fingerpay/src/widget/fab_menuItem.dart';
+import 'package:fingerpay/src/widget/fab_menu.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -31,18 +32,54 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () => Navigator.of(context).pop(false)),
                   ])),
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Container(
-          height: 65.0,
-          width: 65.0,
-          child: FittedBox(
-              child: FloatingActionButton(
-            onPressed: () {},
-            child: Icon(
-              Icons.attach_money,
-              color: Colors.white,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: BoomMenu(
+          animatedIcon: AnimatedIcons.menu_close,
+          animatedIconTheme: IconThemeData(size: 22.0),
+          //child: Icon(Icons.add),
+          onOpen: () => print('OPENING DIAL'),
+          onClose: () => print('DIAL CLOSED'),
+          scrollVisible: true,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.7,
+          children: [
+            MenuItem(
+              child: Icon(Icons.send, color: Colors.white),
+              title: "Send",
+              titleColor: Colors.white,
+              subtitle: "You can send money to anyone",
+              subTitleColor: Colors.white,
+              backgroundColor: Colors.blue,
+              onTap: () => print('FIRST CHILD'),
             ),
-          )),
+            MenuItem(
+              child: Icon(Icons.border_color, color: Colors.black),
+              title: "Request",
+              titleColor: Colors.black,
+              subtitle: "Make a request to receive money",
+              subTitleColor: Colors.black,
+              backgroundColor: Colors.white,
+              onTap: () => print('SECOND CHILD'),
+            ),
+            MenuItem(
+              child: Icon(Icons.monetization_on, color: Colors.white),
+              title: "Top Up",
+              titleColor: Colors.white,
+              subtitle: "Top up money to your account",
+              subTitleColor: Colors.white,
+              backgroundColor: Colors.blue,
+              onTap: () => print('THIRD CHILD'),
+            ),
+            MenuItem(
+              child: Icon(Icons.credit_card, color: Colors.black),
+              title: "My Card",
+              titleColor: Colors.black,
+              subtitle: "You can add a credit card or bank account",
+              subTitleColor: Colors.black,
+              backgroundColor: Colors.white,
+              onTap: () => print('FOURTH CHILD'),
+            )
+          ],
         ),
         bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),
@@ -55,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                   color: selectedIdx == 0 ? Colors.black : Colors.grey,
                   iconSize: 30.0,
-                  padding: EdgeInsets.only(left: 28.0),
+                  padding: EdgeInsets.only(left: 28.0, right: 28.0),
                   icon: Icon(Icons.home),
                   onPressed: () {
                     setState(() {
@@ -67,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                     color: selectedIdx == 1 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
-                    padding: EdgeInsets.only(right: 28.0),
+                    padding: EdgeInsets.only(left: 28.0, right: 28.0),
                     icon: Icon(Icons.person),
                     onPressed: () {
                       setState(() {
@@ -78,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                     color: selectedIdx == 2 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
-                    padding: EdgeInsets.only(left: 28.0),
+                    padding: EdgeInsets.only(left: 28.0, right: 28.0),
                     icon: Icon(Icons.history),
                     onPressed: () {
                       setState(() {
@@ -89,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                     color: selectedIdx == 3 ? Colors.black : Colors.grey,
                     iconSize: 30.0,
-                    padding: EdgeInsets.only(right: 28.0),
+                    padding: EdgeInsets.only(left: 28.0, right: 28.0),
                     icon: Icon(Icons.settings),
                     onPressed: () {
                       setState(() {

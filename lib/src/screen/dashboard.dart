@@ -229,7 +229,7 @@ class _DashboardState extends State<Dashboard> {
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       CreditCard(
-                        color: "2a1214",
+                        color: "000000",
                         number: 9290,
                         image: "master.png",
                         valid: "VALID 10/22",

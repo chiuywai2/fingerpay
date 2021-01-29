@@ -5,6 +5,8 @@ import 'package:fingerpay/src/screen/account.dart';
 import 'package:fingerpay/src/screen/setting.dart';
 import 'package:fingerpay/src/widget/fab_menuItem.dart';
 import 'package:fingerpay/src/widget/fab_menu.dart';
+import 'package:fingerpay/src/screen/myCard.dart';
+import 'package:fingerpay/src/screen/topUp.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -50,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               subtitle: "You can send money to anyone",
               subTitleColor: Colors.white,
               backgroundColor: Colors.blue,
-              onTap: () => print('FIRST CHILD'),
+              onTap: () {},
             ),
             MenuItem(
               child: Icon(Icons.border_color, color: Colors.black),
@@ -68,7 +70,10 @@ class _HomePageState extends State<HomePage> {
               subtitle: "Top up money to your account",
               subTitleColor: Colors.white,
               backgroundColor: Colors.blue,
-              onTap: () => print('THIRD CHILD'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => TopUpPage()));
+              },
             ),
             MenuItem(
               child: Icon(Icons.credit_card, color: Colors.black),
@@ -77,7 +82,10 @@ class _HomePageState extends State<HomePage> {
               subtitle: "You can add a credit card or bank account",
               subTitleColor: Colors.black,
               backgroundColor: Colors.white,
-              onTap: () => print('FOURTH CHILD'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CreditCardsPage()));
+              },
             )
           ],
         ),

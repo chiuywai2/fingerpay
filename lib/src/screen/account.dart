@@ -9,7 +9,6 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   bool showPassword = false;
-  double money = 0.00;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +117,7 @@ class _AccountState extends State<Account> {
                 buildTextField("Phone Number", "1234 5678", false),
                 buildTextField("Password", "********", true),
                 SizedBox(
-                  height: 35,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

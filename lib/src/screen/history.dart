@@ -9,7 +9,6 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  double money = 0.00;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

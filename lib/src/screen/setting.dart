@@ -9,7 +9,6 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  double money = 0.00;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

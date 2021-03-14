@@ -4,14 +4,9 @@ import 'package:fingerpay/src/widget/fab_animatedChild.dart';
 import 'package:fingerpay/src/widget/fab_background.dart';
 import 'package:fingerpay/src/widget/fab_menuItem.dart';
 
-/// Builds the Speed Dial
 class BoomMenu extends StatefulWidget {
-  /// Children buttons, from the lowest to the highest.
   final List<MenuItem> children;
-
-  /// Used to get the button hidden on scroll. See examples for more info.
   final bool scrollVisible;
-
   final Color backgroundColor;
   final Color foregroundColor;
   final double elevation;
@@ -25,35 +20,15 @@ class BoomMenu extends StatefulWidget {
   final double fabPaddingLeft;
   final double fabPaddingRight;
   final double fabPaddingTop;
-
-  /// The color of the background overlay.
   final Color overlayColor;
-
-  /// The opacity of the background overlay when the dial is open.
   final double overlayOpacity;
-
-  /// The animated icon to show as the main button child. If this is provided the [child] is ignored.
   final AnimatedIconData animatedIcon;
-
-  /// The theme for the animated icon.
   final IconThemeData animatedIconTheme;
-
-  /// The child of the main button, ignored if [animatedIcon] is non [null].
   final Widget child;
-
-  /// Executed when the dial is opened.
   final VoidCallback onOpen;
-
-  /// Executed when the dial is closed.
   final VoidCallback onClose;
-
-  /// Executed when the dial is pressed. If given, the dial only opens on long press!
   final VoidCallback onPress;
-
-  /// If true user is forced to close dial manually by tapping main button. WARNING: If true, overlay is not rendered.
   final bool overlayVisible;
-
-  /// The speed of the animation
   final int animationSpeed;
 
   final String title;
@@ -237,13 +212,6 @@ class _BoomMenuState extends State<BoomMenu>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
-          /*children: List.from(fabChildren)
-            ..add(
-              Container(
-                margin: EdgeInsets.only(top: 8.0, right: 2.0),
-                child: animatedFloatingButton,
-              ),
-            ),*/
           children: <Widget>[
             SizedBox(height: kToolbarHeight + 40),
             Visibility(

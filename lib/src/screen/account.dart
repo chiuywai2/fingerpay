@@ -124,10 +124,12 @@ class _AccountState extends State<Account> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: OutlineButton(
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
                         onPressed: () {},
                         child: Text("CANCEL",
                             style: TextStyle(
@@ -138,13 +140,15 @@ class _AccountState extends State<Account> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
                         onPressed: () {},
-                        color: Colors.blue,
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
                         child: Text(
                           "SAVE",
                           style: TextStyle(

@@ -250,7 +250,7 @@ class _BoomMenuState extends State<BoomMenu>
     return Stack(
       alignment: Alignment.bottomRight,
       fit: StackFit.expand,
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       children: children,
     );
   }

@@ -32,6 +32,12 @@ dependencies:
   google_fonts: ^1.1.1
   flutter_svg: ^0.19.1
   math_expressions: ^2.0.2
+  google_sign_in:
+  firebase_core: ^0.7.0
+  firebase_auth: ^0.20.1
+  
+dependency_overrides:
+  intl: ^0.17.0-nullsafety.2
 
 dev_dependencies:
   flutter_test:

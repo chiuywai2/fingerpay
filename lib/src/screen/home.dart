@@ -25,10 +25,10 @@ class _HomePageState extends State<HomePage> {
           builder: (context) => AlertDialog(
                   title: Text('Are you sure you want to quit?'),
                   actions: <Widget>[
-                    RaisedButton(
+                    ElevatedButton(
                         child: Text('Quit'),
                         onPressed: () => Navigator.of(context).pop(true)),
-                    RaisedButton(
+                    ElevatedButton(
                         child: Text('Cancel'),
                         onPressed: () => Navigator.of(context).pop(false)),
                   ])),

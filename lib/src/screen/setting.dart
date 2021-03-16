@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -123,12 +124,14 @@ class _SettingState extends State<Setting> {
                   height: 20,
                 ),
                 Center(
-                  child: OutlineButton(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
-                      Navigator.pop(context);
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
                     },
                     child: Text("SIGN OUT",
                         style: TextStyle(
@@ -188,7 +191,7 @@ class _SettingState extends State<Setting> {
                     ],
                   ),
                   actions: [
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

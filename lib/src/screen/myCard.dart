@@ -72,7 +72,7 @@ class _CreditCardsPageState extends State<CreditCardsPage> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   content: Stack(
-                    overflow: Overflow.visible,
+                    clipBehavior: Clip.none,
                     children: <Widget>[
                       Positioned(
                           right: -30,
@@ -182,7 +182,7 @@ class _CreditCardsPageState extends State<CreditCardsPage> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: RaisedButton(
+                                child: ElevatedButton(
                                   child: Text("add"),
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {

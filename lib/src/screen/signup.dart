@@ -36,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  Widget _emailField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -50,11 +50,45 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+            onChanged: (value) {
+              _email = value;
+            },
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _passwordField(String title, {bool isPassword = false}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextField(
+            onChanged: (value) {
+              _password = value;
+            },
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+          )
         ],
       ),
     );
@@ -64,6 +98,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return GestureDetector(
       onTap: () {
         _createUser();
+        Navigator.pop(context);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -93,6 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _loginAccountLabel() {
     return InkWell(
       onTap: () {
+        Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
@@ -150,9 +186,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Username"),
-        _entryField("Email id"),
-        _entryField("Password", isPassword: true),
+        _emailField("Email"),
+        _passwordField("Password", isPassword: true),
       ],
     );
   }
@@ -192,15 +227,22 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> _createUser() async {
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInAnonymously();
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: _email, password: _password);
       print("User: $userCredential");
     } on FirebaseAuthException catch (e) {
-      print("Error: $e");
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
     } catch (e) {
-      print("Error: $e");
+      print(e);
     }
   }
+
+  String _email;
+  String _password;
 
   @override
   Widget build(BuildContext context) {

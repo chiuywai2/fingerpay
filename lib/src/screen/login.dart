@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/screen/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fingerpay/src/widget/bezierContainer.dart';
-import 'package:fingerpay/src/screen/home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  Widget _emailField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -49,6 +49,38 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           TextField(
+            onChanged: (value) {
+              _email = value;
+            },
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _passwordField(String title, {bool isPassword = false}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextField(
+            onChanged: (value) {
+              _password = value;
+            },
             obscureText: isPassword,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -64,8 +96,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        _createUser();
+        Navigator.pop(context);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -95,6 +127,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _createAccountLabel() {
     return InkWell(
       onTap: () {
+        Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SignUpPage()));
       },
@@ -149,14 +182,31 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _createUser() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email, password: _password);
+      print("User: $userCredential");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email id"),
-        _entryField("Password", isPassword: true),
+        _emailField("Email"),
+        _passwordField("Password", isPassword: true),
       ],
     );
   }
+
+  String _email;
+  String _password;
 
   @override
   Widget build(BuildContext context) {

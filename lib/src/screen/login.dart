@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/screen/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fingerpay/src/widget/bezierContainer.dart';
+import 'package:fingerpay/src/service/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             height: 10,
           ),
-          TextField(
+          TextFormField(
             onChanged: (value) {
               _email = value;
             },
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             height: 10,
           ),
-          TextField(
+          TextFormField(
             onChanged: (value) {
               _password = value;
             },
@@ -95,8 +95,10 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () {
-        _createUser();
+      onTap: () async {
+        String uid =
+            await AuthService().sinInWithEmailAndPassword(_email, _password);
+        print("Signed In with ID $uid");
         Navigator.pop(context);
       },
       child: Container(
@@ -180,20 +182,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ]),
     );
-  }
-
-  Future<void> _createUser() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password);
-      print("User: $userCredential");
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
   }
 
   Widget _emailPasswordWidget() {

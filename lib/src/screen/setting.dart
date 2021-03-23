@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fingerpay/src/service/auth_service.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -131,7 +131,7 @@ class _SettingState extends State<Setting> {
                           borderRadius: BorderRadius.circular(20)),
                     ),
                     onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
+                      await AuthService().signOut();
                     },
                     child: Text("SIGN OUT",
                         style: TextStyle(

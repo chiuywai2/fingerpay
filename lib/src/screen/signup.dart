@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/Widget/bezierContainer.dart';
 import 'package:fingerpay/src/screen/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fingerpay/src/widget/socialicon.dart';
+import 'package:fingerpay/src/service/auth_service.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key, this.title}) : super(key: key);
@@ -49,9 +49,38 @@ class _SignUpPageState extends State<SignUpPage> {
           SizedBox(
             height: 10,
           ),
-          TextField(
+          TextFormField(
             onChanged: (value) {
               _email = value;
+            },
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _usernameField(String title, {bool isPassword = false}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            onChanged: (value) {
+              _username = value;
             },
             obscureText: isPassword,
             decoration: InputDecoration(
@@ -78,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
           SizedBox(
             height: 10,
           ),
-          TextField(
+          TextFormField(
             onChanged: (value) {
               _password = value;
             },
@@ -96,8 +125,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _submitButton() {
     return GestureDetector(
-      onTap: () {
-        _createUser();
+      onTap: () async {
+        String uid = await AuthService()
+            .createUserWithEmailAndPassword(_email, _password, _username);
+        print("Singed up with New ID $uid");
         Navigator.pop(context);
       },
       child: Container(
@@ -186,6 +217,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
+        _usernameField("Username"),
         _emailField("Email"),
         _passwordField("Password", isPassword: true),
       ],
@@ -225,22 +257,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Future<void> _createUser() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: _email, password: _password);
-      print("User: $userCredential");
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
+  String _username;
   String _email;
   String _password;
 

@@ -1,6 +1,8 @@
+import 'package:fingerpay/src/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
+import 'package:fingerpay/src/models/user.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -12,158 +14,174 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
       body: Container(
-        child: Stack(children: <Widget>[
-          Topbar(
-            barHeight: 175,
-          ),
-          SafeArea(
-            child: ListView(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "\nTotal Balance\n",
-                            style: TextStyle(color: white, fontSize: 18)),
-                        TextSpan(
-                            text: "\$ ",
-                            style: TextStyle(color: white, fontSize: 30)),
-                        TextSpan(
-                            text: "1,234.00 \n",
-                            style: TextStyle(color: white, fontSize: 36)),
-                      ])),
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: white,
-                          size: 40,
-                        ),
-                        onPressed: () {})
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Personal Profile",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-                Center(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            boxShadow: [
-                              BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
-                            ],
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage("assets/images/p2.jpg"))),
-                      ),
-                      Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                              ),
-                              color: Colors.blue,
-                            ),
-                            child: Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
-                          )),
-                    ],
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: <Widget>[
+            Topbar(
+              barHeight: 175,
+            ),
+            FutureBuilder(
+              future: AuthService().getCurrent(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return displayUserInformation(context, snapshot);
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget displayUserInformation(context, snapshot) {
+    final authData = snapshot.data;
+    return SafeArea(
+      child: ListView(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: "\nTotal Balance\n",
+                      style: TextStyle(color: white, fontSize: 18)),
+                  TextSpan(
+                      text: "\$ ",
+                      style: TextStyle(color: white, fontSize: 30)),
+                  TextSpan(
+                      text: "1,234.00 \n",
+                      style: TextStyle(color: white, fontSize: 36)),
+                ])),
+              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: white,
+                    size: 40,
                   ),
+                  onPressed: () {})
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Personal Profile",
+                  style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(
-                  height: 35,
+              ),
+            ],
+          ),
+          Center(
+            child: Stack(
+              children: [
+                Container(
+                  width: 130,
+                  height: 130,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 4,
+                          color: Theme.of(context).scaffoldBackgroundColor),
+                      boxShadow: [
+                        BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 10))
+                      ],
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(
+                              "${authData.photoURL ?? 'assets/images/anonymous.jpg'}"))),
                 ),
-                buildTextField("User Name", "Dor Alex", false),
-                buildTextField("Full Name", "Dor Alex", false),
-                buildTextField("E-mail", "alexd@gmail.com", false),
-                buildTextField("Phone Number", "1234 5678", false),
-                buildTextField("Password", "********", true),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 50),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
+                Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 4,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                         ),
-                        onPressed: () {},
-                        child: Text("CANCEL",
-                            style: TextStyle(
-                                fontSize: 14,
-                                letterSpacing: 2.2,
-                                color: Colors.black)),
+                        color: Colors.blue,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          padding: EdgeInsets.symmetric(horizontal: 50),
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          "SAVE",
-                          style: TextStyle(
-                              fontSize: 14,
-                              letterSpacing: 2.2,
-                              color: Colors.white),
-                        ),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
                       ),
-                    )
-                  ],
-                ),
+                    )),
               ],
             ),
           ),
-        ]),
+          SizedBox(
+            height: 35,
+          ),
+          buildTextField(
+              "User Name", "${authData.displayName ?? 'Anonymous'}", false),
+          buildTextField("Full Name", "Dor Alex", false),
+          buildTextField("E-mail", "${authData.email ?? 'Anonymous'}", false),
+          buildTextField("Phone Number", "1234 5678", false),
+          buildTextField("Password", "********", true),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                  ),
+                  onPressed: () {},
+                  child: Text("CANCEL",
+                      style: TextStyle(
+                          fontSize: 14,
+                          letterSpacing: 2.2,
+                          color: Colors.black)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    padding: EdgeInsets.symmetric(horizontal: 50),
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                  ),
+                  onPressed: () {
+                    _userUpdate(context);
+                  },
+                  child: Text(
+                    "SAVE",
+                    style: TextStyle(
+                        fontSize: 14, letterSpacing: 2.2, color: Colors.white),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -200,4 +218,6 @@ class _AccountState extends State<Account> {
       ),
     );
   }
+
+  void _userUpdate(BuildContext context) {}
 }

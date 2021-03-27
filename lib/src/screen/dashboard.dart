@@ -1,9 +1,11 @@
+import 'package:fingerpay/src/models/user.dart';
 import 'package:fingerpay/src/widget/profileIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
 import 'package:fingerpay/src/widget/cards.dart';
 import 'package:fingerpay/src/widget/historyItem.dart';
+import 'package:fingerpay/src/widget/provider_widget.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -11,8 +13,35 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  UserAccount user = UserAccount(0, '', '');
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of(context).auth.getCurrent(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return dashboard(context, snapshot);
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Widget dashboard(context, snapshot) {
+    _getProfileData() async {
+      final uid = await Provider.of(context).auth.getCurrentUID();
+      await Provider.of(context)
+          .db
+          .collection('user')
+          .doc(uid)
+          .get()
+          .then((result) {
+        user.balance = result.data()['balance'].toDouble();
+      });
+    }
+
     return Scaffold(
       body: Container(
         child: Stack(children: <Widget>[
@@ -25,21 +54,25 @@ class _DashboardState extends State<Dashboard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "\nTotal Balance\n",
-                          style: TextStyle(color: white, fontSize: 18)),
-                      TextSpan(
-                          text: "\$ ",
-                          style: TextStyle(color: white, fontSize: 30)),
-                      TextSpan(
-                          text: "1,234.00 \n",
-                          style: TextStyle(color: white, fontSize: 36)),
-                    ])),
-                  ),
+                  FutureBuilder(
+                      future: _getProfileData(),
+                      builder: (context, snapshot) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: "\nTotal Balance\n",
+                                style: TextStyle(color: white, fontSize: 18)),
+                            TextSpan(
+                                text: "\$ ",
+                                style: TextStyle(color: white, fontSize: 30)),
+                            TextSpan(
+                                text: "${user.balance}\n",
+                                style: TextStyle(color: white, fontSize: 36)),
+                          ])),
+                        );
+                      }),
                   IconButton(
                       icon: Icon(
                         Icons.more_vert,

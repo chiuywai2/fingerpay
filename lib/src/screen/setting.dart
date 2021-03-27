@@ -3,6 +3,8 @@ import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fingerpay/src/service/auth_service.dart';
+import 'package:fingerpay/src/widget/provider_widget.dart';
+import 'package:fingerpay/src/models/user.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -10,8 +12,34 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  UserAccount user = UserAccount(0, '', '');
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of(context).auth.getCurrent(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return setting(context, snapshot);
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Widget setting(context, snapshot) {
+    _getProfileData() async {
+      final uid = await Provider.of(context).auth.getCurrentUID();
+      await Provider.of(context)
+          .db
+          .collection('user')
+          .doc(uid)
+          .get()
+          .then((result) {
+        user.balance = result.data()['balance'].toDouble();
+      });
+    }
+
     return Scaffold(
       backgroundColor: white,
       body: Container(
@@ -25,21 +53,25 @@ class _SettingState extends State<Setting> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "\nTotal Balance\n",
-                            style: TextStyle(color: white, fontSize: 18)),
-                        TextSpan(
-                            text: "\$ ",
-                            style: TextStyle(color: white, fontSize: 30)),
-                        TextSpan(
-                            text: "1,234.00 \n",
-                            style: TextStyle(color: white, fontSize: 36)),
-                      ])),
-                    ),
+                    FutureBuilder(
+                        future: _getProfileData(),
+                        builder: (context, snapshot) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: "\nTotal Balance\n",
+                                  style: TextStyle(color: white, fontSize: 18)),
+                              TextSpan(
+                                  text: "\$ ",
+                                  style: TextStyle(color: white, fontSize: 30)),
+                              TextSpan(
+                                  text: "${user.balance}\n",
+                                  style: TextStyle(color: white, fontSize: 36)),
+                            ])),
+                          );
+                        }),
                     IconButton(
                         icon: Icon(
                           Icons.more_vert,

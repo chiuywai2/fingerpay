@@ -1,3 +1,4 @@
+import 'package:fingerpay/src/service/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -26,6 +27,8 @@ class AuthService {
           email: email, password: password);
       // Update the username
       await userCredential.user.updateProfile(displayName: name);
+      await DatabaseService(uid: userCredential.user.uid)
+          .updateUserData(0, name, '');
       return userCredential.user.uid;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

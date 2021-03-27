@@ -1,8 +1,7 @@
-import 'package:fingerpay/src/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
 import 'package:fingerpay/src/common.dart';
-import 'package:fingerpay/src/models/user.dart';
+import 'package:fingerpay/src/widget/provider_widget.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -22,7 +21,7 @@ class _AccountState extends State<Account> {
               barHeight: 175,
             ),
             FutureBuilder(
-              future: AuthService().getCurrent(),
+              future: Provider.of(context).auth.getCurrent(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return displayUserInformation(context, snapshot);
@@ -169,9 +168,7 @@ class _AccountState extends State<Account> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                   ),
-                  onPressed: () {
-                    _userUpdate(context);
-                  },
+                  onPressed: () {},
                   child: Text(
                     "SAVE",
                     style: TextStyle(
@@ -218,6 +215,4 @@ class _AccountState extends State<Account> {
       ),
     );
   }
-
-  void _userUpdate(BuildContext context) {}
 }

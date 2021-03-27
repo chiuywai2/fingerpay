@@ -1,11 +1,11 @@
 import 'package:fingerpay/src/screen/home.dart';
 import 'package:fingerpay/src/screen/welcome.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:fingerpay/src/service/auth_service.dart';
+import 'package:fingerpay/src/widget/provider_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,17 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return MultiProvider(
-        providers: [
-          Provider<AuthService>(
-            create: (_) => AuthService(),
-          ),
-          StreamProvider(
-            create: (context) =>
-                context.read<AuthService>().onAAuthStateChanged,
-            initialData: null,
-          )
-        ],
+    return Provider(
+        auth: AuthService(),
+        db: FirebaseFirestore.instance,
         child: MaterialApp(
           title: 'Finger Pay System',
           theme: ThemeData(
@@ -38,59 +30,25 @@ class MyApp extends StatelessWidget {
               )),
           debugShowCheckedModeBanner: false,
           home: LandingPage(),
+          routes: <String, WidgetBuilder>{
+            '/home': (BuildContext context) => HomePage(),
+          },
         ));
   }
 }
 
 class LandingPage extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Scaffold(
-              body: Center(
-            child: Text("Error: ${snapshot.error}"),
-          ));
+    final AuthService auth = Provider.of(context).auth;
+    return StreamBuilder<String>(
+      stream: auth.onAAuthStateChanged,
+      builder: (context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final bool signedIn = snapshot.hasData;
+          return signedIn ? HomePage() : WelcomePage();
         }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          return StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, streamSnapshot) {
-              if (streamSnapshot.hasError) {
-                return Scaffold(
-                  body: Center(
-                    child: Text("Error: ${streamSnapshot.error}"),
-                  ),
-                );
-              }
-              if (streamSnapshot.connectionState == ConnectionState.active) {
-                User user = streamSnapshot.data;
-
-                if (user == null) {
-                  return WelcomePage();
-                } else {
-                  return HomePage();
-                }
-              }
-
-              return Scaffold(
-                  body: Center(
-                child: Text("Checking Authentication ...."),
-              ));
-            },
-          );
-        }
-
-        return Scaffold(
-          body: Center(
-            child: Text("Connecting to the app..."),
-          ),
-        );
+        return CircularProgressIndicator();
       },
     );
   }

@@ -14,4 +14,10 @@ class DatabaseService {
       'phone': phone,
     });
   }
+
+  Future updatebalance(double balance) async {
+    return await userCollection.doc(uid).set({
+      'balance': balance,
+    });
+  }
 }

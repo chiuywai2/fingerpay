@@ -4,7 +4,8 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:fingerpay/src/widget/cal_button.dart';
 
 class TopUpPage extends StatefulWidget {
-  const TopUpPage({Key key}) : super(key: key);
+  final double balance;
+  const TopUpPage({Key key, this.balance}) : super(key: key);
 
   @override
   _TopUpPageState createState() => _TopUpPageState();
@@ -12,7 +13,8 @@ class TopUpPage extends StatefulWidget {
 
 class _TopUpPageState extends State<TopUpPage> {
   String _history = '';
-  String _expression = '50';
+  String _expression = '0';
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -88,215 +90,208 @@ class _TopUpPageState extends State<TopUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Calculator',
-      home: Scaffold(
-        backgroundColor: Color(0xFF3884e0),
-        body: Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: 80),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "\nCurrent Balance\n",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 30)),
-                        TextSpan(
-                            text: "\$ ",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 43)),
-                        TextSpan(
-                            text: "1,234.00 \n",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 50)),
-                      ])),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(12),
+    return Scaffold(
+      backgroundColor: Color(0xFF3884e0),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Text(
-                        _history,
-                        style: GoogleFonts.rubik(
-                          textStyle: TextStyle(
-                            fontSize: 24,
-                            color: Color(0xFF545F61),
-                          ),
-                        ),
-                      ),
-                    ),
-                    alignment: Alignment(1.0, 1.0),
+                  SizedBox(height: 80),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "\nCurrent Balance\n",
+                          style: TextStyle(color: Colors.white, fontSize: 30)),
+                      TextSpan(
+                          text: "\$ ",
+                          style: TextStyle(color: Colors.white, fontSize: 43)),
+                      TextSpan(
+                          text: "${widget.balance}\n",
+                          style: TextStyle(color: Colors.white, fontSize: 50)),
+                    ])),
                   ),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(
-                        _expression,
-                        style: GoogleFonts.rubik(
-                          textStyle: TextStyle(
-                            fontSize: 48,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    alignment: Alignment(1.0, 1.0),
-                  ),
-                  SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CalcButton(
-                        text: 'AC',
-                        fillColor: 0xff3884e0,
-                        textSize: 20,
-                        textColor: 0xFFa7c8f1,
-                        callback: allClear,
-                      ),
-                      CalcButton(
-                        text: 'C',
-                        fillColor: 0xff3884e0,
-                        textColor: 0xFFa7c8f1,
-                        callback: clear,
-                      ),
-                      CalcButton(
-                        text: '%',
-                        fillColor: 0xFFFFFFFF,
-                        textColor: 0xFF7badea,
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '/',
-                        fillColor: 0xFFFFFFFF,
-                        textColor: 0xFF7badea,
-                        callback: numClick,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CalcButton(
-                        text: '7',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '8',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '9',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '*',
-                        fillColor: 0xFFFFFFFF,
-                        textColor: 0xFF7badea,
-                        textSize: 24,
-                        callback: numClick,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CalcButton(
-                        text: '4',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '5',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '6',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '-',
-                        fillColor: 0xFFFFFFFF,
-                        textColor: 0xFF7badea,
-                        textSize: 38,
-                        callback: numClick,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CalcButton(
-                        text: '1',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '2',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '3',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '+',
-                        fillColor: 0xFFFFFFFF,
-                        textColor: 0xFF7badea,
-                        textSize: 30,
-                        callback: numClick,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CalcButton(
-                        text: '.',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '0',
-                        callback: numClick,
-                      ),
-                      CalcButton(
-                        text: '00',
-                        callback: numClick,
-                        textSize: 26,
-                      ),
-                      CalcButton(
-                        text: '=',
-                        fillColor: 0xFFFFFFFF,
-                        textColor: 0xFF7badea,
-                        callback: evaluate,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _submitButton(),
                 ],
               ),
             ),
-            Positioned(top: 40, left: 0, child: _backButton()),
-          ],
-        ),
+          ),
+          Container(
+            padding: EdgeInsets.all(12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Text(
+                      _history,
+                      style: GoogleFonts.rubik(
+                        textStyle: TextStyle(
+                          fontSize: 24,
+                          color: Color(0xFF545F61),
+                        ),
+                      ),
+                    ),
+                  ),
+                  alignment: Alignment(1.0, 1.0),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      _expression,
+                      style: GoogleFonts.rubik(
+                        textStyle: TextStyle(
+                          fontSize: 48,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  alignment: Alignment(1.0, 1.0),
+                ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: 'AC',
+                      fillColor: 0xff3884e0,
+                      textSize: 20,
+                      textColor: 0xFFa7c8f1,
+                      callback: allClear,
+                    ),
+                    CalcButton(
+                      text: 'C',
+                      fillColor: 0xff3884e0,
+                      textColor: 0xFFa7c8f1,
+                      callback: clear,
+                    ),
+                    CalcButton(
+                      text: '%',
+                      fillColor: 0xFFFFFFFF,
+                      textColor: 0xFF7badea,
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '/',
+                      fillColor: 0xFFFFFFFF,
+                      textColor: 0xFF7badea,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '7',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '8',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '9',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '*',
+                      fillColor: 0xFFFFFFFF,
+                      textColor: 0xFF7badea,
+                      textSize: 24,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '4',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '5',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '6',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '-',
+                      fillColor: 0xFFFFFFFF,
+                      textColor: 0xFF7badea,
+                      textSize: 38,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '1',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '2',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '3',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '+',
+                      fillColor: 0xFFFFFFFF,
+                      textColor: 0xFF7badea,
+                      textSize: 30,
+                      callback: numClick,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CalcButton(
+                      text: '.',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '0',
+                      callback: numClick,
+                    ),
+                    CalcButton(
+                      text: '00',
+                      callback: numClick,
+                      textSize: 26,
+                    ),
+                    CalcButton(
+                      text: '=',
+                      fillColor: 0xFFFFFFFF,
+                      textColor: 0xFF7badea,
+                      callback: evaluate,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                _submitButton(),
+              ],
+            ),
+          ),
+          Positioned(top: 40, left: 0, child: _backButton()),
+        ],
       ),
     );
   }

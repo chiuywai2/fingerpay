@@ -4,15 +4,15 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:fingerpay/src/widget/cal_button.dart';
 import 'confirmTopUp.dart';
 
-class TopUpPage extends StatefulWidget {
+class CreatePaymentPage extends StatefulWidget {
   final double balance;
-  const TopUpPage({Key key, this.balance}) : super(key: key);
+  const CreatePaymentPage({Key key, this.balance}) : super(key: key);
 
   @override
-  _TopUpPageState createState() => _TopUpPageState();
+  _CreatePaymentPageState createState() => _CreatePaymentPageState();
 }
 
-class _TopUpPageState extends State<TopUpPage> {
+class _CreatePaymentPageState extends State<CreatePaymentPage> {
   String _history = '';
   String _expression = '';
 

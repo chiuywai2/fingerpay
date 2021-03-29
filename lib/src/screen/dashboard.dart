@@ -1,4 +1,5 @@
 import 'package:fingerpay/src/models/user.dart';
+import 'package:fingerpay/src/screen/topUp.dart';
 import 'package:fingerpay/src/widget/profileIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/topbar.dart';
@@ -6,6 +7,8 @@ import 'package:fingerpay/src/common.dart';
 import 'package:fingerpay/src/widget/cards.dart';
 import 'package:fingerpay/src/widget/historyItem.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
+
+import 'myCard.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -156,7 +159,13 @@ class _DashboardState extends State<Dashboard> {
                                 icon: Icon(Icons.monetization_on),
                                 color: Colors.blue,
                                 iconSize: 30.0,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => TopUpPage(
+                                              balance: user.balance)));
+                                },
                               ),
                             ),
                             SizedBox(height: 8.0),
@@ -204,7 +213,13 @@ class _DashboardState extends State<Dashboard> {
                                 icon: Icon(Icons.credit_card),
                                 color: Colors.purpleAccent,
                                 iconSize: 30.0,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CreditCardsPage()));
+                                },
                               ),
                             ),
                             SizedBox(height: 8.0),

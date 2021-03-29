@@ -16,6 +16,7 @@ class CreatePaymentPage extends StatefulWidget {
 class _CreatePaymentPageState extends State<CreatePaymentPage> {
   String _history = '';
   String _expression = '';
+  bool _pay = true;
 
   Widget _backButton() {
     return InkWell(
@@ -44,8 +45,11 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
+        if (_expression == ''){
+          _expression = '0';
+        }
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PaymentScanPage()));
+            MaterialPageRoute(builder: (context) => PaymentScanPage(pay: _pay, amount: double.parse(_expression),)));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -119,6 +123,11 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
                         labels: ['Pay', 'Recieve'],
                         icons: [Icons.send, Icons.border_color],
                         onToggle: (index) {
+                          if(index == 1){
+                            _pay = false;
+                          }else{
+                            _pay = true;
+                          }
                           print('switched to: $index');
                         }),
                   ),

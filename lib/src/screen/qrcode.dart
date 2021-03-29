@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:fingerpay/src/screen/qrcode.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class PaymentScanPage extends StatefulWidget {
+class QRCode extends StatefulWidget {
+  final double amount;
   final bool pay;
-final double amount;
-  const PaymentScanPage({Key key, this.pay, this.amount}) : super(key: key);
+
+  const QRCode({Key key, this.amount, this.pay}) : super(key: key);
 
   @override
-  _PaymentScanPageState createState() => _PaymentScanPageState();
+  _QRCodeState createState() => _QRCodeState();
 }
 
-class _PaymentScanPageState extends State<PaymentScanPage> {
+class _QRCodeState extends State<QRCode> {
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -37,8 +38,10 @@ class _PaymentScanPageState extends State<PaymentScanPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () {Navigator.push(context,
-            MaterialPageRoute(builder: (context) => QRCode(pay: widget.pay, amount: widget.amount,)));},
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);},
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
@@ -50,7 +53,7 @@ class _PaymentScanPageState extends State<PaymentScanPage> {
                 end: Alignment.centerRight,
                 colors: [Color(0xffffffff), Color(0xffffffff)])),
         child: Text(
-          'Next',
+          'Finish',
           style: TextStyle(fontSize: 20, color: Color(0xFF3884e0)),
         ),
       ),
@@ -63,6 +66,16 @@ class _PaymentScanPageState extends State<PaymentScanPage> {
       backgroundColor: Color(0xFF3884e0),
       body: Stack(
         children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 53, top: 10, bottom: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                QrImage(backgroundColor: Colors.white,foregroundColor:Color(0xFF3884e0), data: 'abcd', version: QrVersions.auto, size: 350.0),
+              ],
+            ),
+          ),
+          
           Container(
             padding: EdgeInsets.all(12),
             child: Column(

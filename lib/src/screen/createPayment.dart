@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:fingerpay/src/widget/cal_button.dart';
-import 'confirmTopUp.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class CreatePaymentPage extends StatefulWidget {
   final double balance;
@@ -42,18 +42,7 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () {
-        if (_expression == '') {
-          _expression = '0';
-        }
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ConfirmTopUp(
-                      balance: widget.balance,
-                      topUpValue: double.parse(_expression),
-                    )));
-      },
+      onTap: () {},
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
@@ -65,7 +54,7 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
                 end: Alignment.centerRight,
                 colors: [Color(0xffffffff), Color(0xffffffff)])),
         child: Text(
-          'Top Up',
+          'Next',
           style: TextStyle(fontSize: 20, color: Color(0xFF3884e0)),
         ),
       ),
@@ -113,22 +102,44 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: 80),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "\nCurrent Balance\n",
-                          style: TextStyle(color: Colors.white, fontSize: 30)),
-                      TextSpan(
-                          text: "\$ ",
-                          style: TextStyle(color: Colors.white, fontSize: 43)),
-                      TextSpan(
-                          text: "${widget.balance}\n",
-                          style: TextStyle(color: Colors.white, fontSize: 50)),
-                    ])),
+                  Container(
+                    margin: EdgeInsets.only(top: 120.0, bottom: 4.0, left: 10),
+                    alignment: Alignment.center,
+                    child: ToggleSwitch(
+                        minWidth: 90.0,
+                        cornerRadius: 20,
+                        activeBgColor: Colors.grey,
+                        activeFgColor: Colors.white,
+                        inactiveBgColor: Colors.white,
+                        inactiveFgColor: Colors.grey,
+                        labels: ['Pay', 'Recieve'],
+                        icons: [Icons.send, Icons.border_color],
+                        onToggle: (index) {
+                          print('switched to: $index');
+                        }),
                   ),
+                  SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "\nCurrent Balance\n",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 30)),
+                        TextSpan(
+                            text: "\$ ",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 43)),
+                        TextSpan(
+                            text: "${widget.balance}\n",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 50)),
+                      ])),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -10,6 +10,8 @@ import 'package:fingerpay/src/screen/topUp.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
 import 'package:fingerpay/src/models/user.dart';
 
+import 'createPayment.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
   @override
@@ -169,7 +171,13 @@ class _HomePageState extends State<HomePage> {
                 subtitle: "You can send money to anyone",
                 subTitleColor: Colors.white,
                 backgroundColor: Colors.blue,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CreatePaymentPage(balance: user.balance)));
+                },
               ),
               MenuItem(
                 child: Icon(Icons.border_color, color: Colors.black),
@@ -178,7 +186,13 @@ class _HomePageState extends State<HomePage> {
                 subtitle: "Make a request to receive money",
                 subTitleColor: Colors.black,
                 backgroundColor: Colors.white,
-                onTap: () => print('SECOND CHILD'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              TopUpPage(balance: user.balance)));
+                },
               ),
               MenuItem(
                 child: Icon(Icons.monetization_on, color: Colors.white),

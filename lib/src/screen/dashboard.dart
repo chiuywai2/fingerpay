@@ -8,6 +8,7 @@ import 'package:fingerpay/src/widget/cards.dart';
 import 'package:fingerpay/src/widget/historyItem.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
 
+import 'createPayment.dart';
 import 'myCard.dart';
 
 class Dashboard extends StatefulWidget {
@@ -119,7 +120,14 @@ class _DashboardState extends State<Dashboard> {
                                 icon: Icon(Icons.send),
                                 color: Colors.purple,
                                 iconSize: 30.0,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CreatePaymentPage(
+                                                  balance: user.balance)));
+                                },
                               ),
                             ),
                             SizedBox(height: 8.0),

@@ -7,7 +7,6 @@ import 'package:fingerpay/src/common.dart';
 import 'package:fingerpay/src/widget/cards.dart';
 import 'package:fingerpay/src/widget/historyItem.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
-
 import 'createPayment.dart';
 import 'myCard.dart';
 

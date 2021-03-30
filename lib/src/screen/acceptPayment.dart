@@ -1,17 +1,16 @@
-import 'package:fingerpay/src/service/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fingerpay/src/screen/qrcode.dart';
+import 'package:fingerpay/src/widget/provider_widget.dart';
 
-class PaymentScanPage extends StatefulWidget {
-  final bool pay;
-  final double amount;
-  const PaymentScanPage({Key key, this.pay, this.amount}) : super(key: key);
+class AcceptPay extends StatefulWidget {
+  final String encrpytedtext;
+
+  const AcceptPay({Key key, this.encrpytedtext}) : super(key: key);
 
   @override
-  _PaymentScanPageState createState() => _PaymentScanPageState();
+  _AcceptPayState createState() => _AcceptPayState();
 }
 
-class _PaymentScanPageState extends State<PaymentScanPage> {
+class _AcceptPayState extends State<AcceptPay> {
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -38,16 +37,8 @@ class _PaymentScanPageState extends State<PaymentScanPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () async {
-        String uid = await AuthService().getCurrentUID();
-        await Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => QRCode(
-                      pay: widget.pay,
-                      amount: widget.amount,
-                      uid: uid,
-                    )));
+      onTap: () {
+        Navigator.pop(context);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -60,7 +51,7 @@ class _PaymentScanPageState extends State<PaymentScanPage> {
                 end: Alignment.centerRight,
                 colors: [Color(0xffffffff), Color(0xffffffff)])),
         child: Text(
-          'Next',
+          'Finish',
           style: TextStyle(fontSize: 20, color: Color(0xFF3884e0)),
         ),
       ),
@@ -69,10 +60,31 @@ class _PaymentScanPageState extends State<PaymentScanPage> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of(context).auth.getCurrent(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return qr(context, snapshot);
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Widget qr(context, snapshot) {
     return Scaffold(
       backgroundColor: Color(0xFF3884e0),
       body: Stack(
         children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[],
+            ),
+          ),
           Container(
             padding: EdgeInsets.all(12),
             child: Column(

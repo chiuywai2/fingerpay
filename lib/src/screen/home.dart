@@ -9,8 +9,9 @@ import 'package:fingerpay/src/screen/myCard.dart';
 import 'package:fingerpay/src/screen/topUp.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
 import 'package:fingerpay/src/models/user.dart';
-
 import 'createPayment.dart';
+import 'package:fingerpay/src/screen/acceptPayment.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String qrCode = '';
   int selectedIdx = 0;
   PageController _myPage = PageController(initialPage: 0);
   UserAccount user = UserAccount(0, '', '');
@@ -186,12 +188,19 @@ class _HomePageState extends State<HomePage> {
                 subtitle: "Make a request to receive money",
                 subTitleColor: Colors.black,
                 backgroundColor: Colors.white,
-                onTap: () {
+                onTap: () async {
+                  String codeSanner =
+                      await BarcodeScanner.scan(); //barcode scnner
+                  setState(() {
+                    qrCode = codeSanner;
+                  });
+                  print(qrCode);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              TopUpPage(balance: user.balance)));
+                          builder: (context) => AcceptPay(
+                                encrpytedtext: qrCode,
+                              )));
                 },
               ),
               MenuItem(

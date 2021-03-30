@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:fingerpay/src/widget/provider_widget.dart';
 
 class QRCode extends StatefulWidget {
+  final String uid;
   final double amount;
   final bool pay;
 
-  const QRCode({Key key, this.amount, this.pay}) : super(key: key);
+  const QRCode({Key key, this.uid, this.amount, this.pay}) : super(key: key);
 
   @override
   _QRCodeState createState() => _QRCodeState();
@@ -41,7 +43,8 @@ class _QRCodeState extends State<QRCode> {
       onTap: () {
         Navigator.pop(context);
         Navigator.pop(context);
-        Navigator.pop(context);},
+        Navigator.pop(context);
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
@@ -62,20 +65,42 @@ class _QRCodeState extends State<QRCode> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of(context).auth.getCurrent(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return qr(context, snapshot);
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Widget qr(context, snapshot) {
     return Scaffold(
       backgroundColor: Color(0xFF3884e0),
       body: Stack(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(left: 53, top: 10, bottom: 10),
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: 10, bottom: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                QrImage(backgroundColor: Colors.white,foregroundColor:Color(0xFF3884e0), data: 'abcd', version: QrVersions.auto, size: 350.0),
+                QrImage(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Color(0xFF3884e0),
+                    data: widget.uid +
+                        ',' +
+                        widget.amount.toString() +
+                        ',' +
+                        widget.pay.toString(),
+                    version: QrVersions.auto,
+                    size: 350.0),
               ],
             ),
           ),
-          
           Container(
             padding: EdgeInsets.all(12),
             child: Column(

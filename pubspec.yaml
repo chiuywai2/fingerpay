@@ -38,7 +38,7 @@ dependencies:
   cloud_firestore: ^0.16.0
   toggle_switch: ^0.1.9
   qr_flutter: ^4.0.0
-  barcode_scanner: ^1.1.0
+  barcode_scan: ^2.0.1
   
 dependency_overrides:
   intl: ^0.17.0-nullsafety.2

@@ -9,6 +9,8 @@ import 'package:fingerpay/src/widget/historyItem.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
 import 'createPayment.dart';
 import 'myCard.dart';
+import 'package:fingerpay/src/screen/acceptPayment.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -17,7 +19,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   UserAccount user = UserAccount(0, '', '');
-
+  String qrCode = '';
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -146,7 +148,20 @@ class _DashboardState extends State<Dashboard> {
                                 icon: Icon(Icons.border_color),
                                 color: Colors.orange,
                                 iconSize: 30.0,
-                                onPressed: () {},
+                                onPressed: () async {
+                                  String codeSanner = await BarcodeScanner
+                                      .scan(); //barcode scnner
+                                  setState(() {
+                                    qrCode = codeSanner;
+                                  });
+                                  print(qrCode);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AcceptPay(
+                                                encrpytedtext: qrCode,
+                                              )));
+                                },
                               ),
                             ),
                             SizedBox(height: 8.0),

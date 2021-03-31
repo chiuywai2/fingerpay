@@ -1,5 +1,9 @@
+import 'package:fingerpay/src/models/user.dart';
+import 'package:fingerpay/src/service/auth_service.dart';
+import 'package:fingerpay/src/service/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
+import 'home.dart';
 
 class AcceptPay extends StatefulWidget {
   final String encrpytedtext;
@@ -11,6 +15,16 @@ class AcceptPay extends StatefulWidget {
 }
 
 class _AcceptPayState extends State<AcceptPay> {
+  UserAccount user1 = UserAccount(0, '', '');
+  UserAccount user2 = UserAccount(0, '', '');
+  List<String> getdata(String encrpytedtext) {
+    List<String> decryptedtext;
+
+    decryptedtext = encrpytedtext.split(',');
+
+    return decryptedtext;
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -35,10 +49,33 @@ class _AcceptPayState extends State<AcceptPay> {
     );
   }
 
-  Widget _submitButton() {
+  Widget _submitButton(String targetuid, bool pay, double amount) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
+        String uid = await AuthService().getCurrentUID();
+        await Provider.of(context)
+            .db
+            .collection('user')
+            .doc(uid)
+            .get()
+            .then((result) {
+          user1.balance = result.data()['balance'].toDouble();
+        });
+        await Provider.of(context)
+            .db
+            .collection('user')
+            .doc(targetuid)
+            .get()
+            .then((result) {
+          user2.balance = result.data()['balance'].toDouble();
+        });
+        await DatabaseService(uid: targetuid).updatebalance(
+            pay ? user2.balance - amount : user2.balance + amount);
+        await DatabaseService(uid: uid).updatebalance(
+            pay ? user1.balance + amount : user1.balance - amount);
         Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -73,6 +110,7 @@ class _AcceptPayState extends State<AcceptPay> {
   }
 
   Widget qr(context, snapshot) {
+    List<String> decrpytedtext = getdata(widget.encrpytedtext);
     return Scaffold(
       backgroundColor: Color(0xFF3884e0),
       body: Stack(
@@ -82,7 +120,31 @@ class _AcceptPayState extends State<AcceptPay> {
             padding: EdgeInsets.only(top: 10, bottom: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[],
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: (decrpytedtext[2] == 'true'
+                            ? 'Recieve :\n'
+                            : 'Pay :\n'),
+                        style: TextStyle(color: Colors.white, fontSize: 30)),
+                    TextSpan(
+                        text: "\$ ",
+                        style: TextStyle(color: Colors.white, fontSize: 43)),
+                    TextSpan(
+                        text: decrpytedtext[1],
+                        style: TextStyle(color: Colors.white, fontSize: 50)),
+                    TextSpan(
+                        text: "\nFrom\n",
+                        style: TextStyle(color: Colors.white, fontSize: 30)),
+                    TextSpan(
+                        text: decrpytedtext[0],
+                        style: TextStyle(color: Colors.white, fontSize: 50)),
+                  ])),
+                ),
+              ],
             ),
           ),
           Container(
@@ -93,7 +155,8 @@ class _AcceptPayState extends State<AcceptPay> {
                 SizedBox(
                   height: 20,
                 ),
-                _submitButton(),
+                _submitButton(decrpytedtext[0], decrpytedtext[2] == 'true',
+                    double.parse(decrpytedtext[1])),
               ],
             ),
           ),

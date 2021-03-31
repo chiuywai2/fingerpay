@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
 
+import 'home.dart';
+
 class QRCode extends StatefulWidget {
   final String uid;
   final double amount;
@@ -44,6 +46,8 @@ class _QRCodeState extends State<QRCode> {
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,

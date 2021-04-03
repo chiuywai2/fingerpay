@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fingerpay/src/screen/signup.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:fingerpay/src/widget/bezierContainer.dart';
 import 'package:fingerpay/src/service/auth_service.dart';
 
@@ -126,6 +126,38 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _anonymousButton() {
+    return InkWell(
+      onTap: () async {
+        String uid = await AuthService().anonymousLogin();
+        print("Signed In with ID $uid");
+        Navigator.pop(context);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(2, 4),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0xff4da6ff), Color(0xff1959a9)])),
+        child: Text(
+          'Anonymous Login',
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
   Widget _createAccountLabel() {
     return InkWell(
       onTap: () {
@@ -163,14 +195,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'f',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline4,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Color(0xff3884e0),
-          ),
+      text: TextSpan(text: 'f',
+          // style: GoogleFonts.portLligatSans(
+          //   textStyle: Theme.of(context).textTheme.headline4,
+          //   fontSize: 30,
+          //   fontWeight: FontWeight.w700,
+          //   color: Color(0xff3884e0),
+          // ),
           children: [
             TextSpan(
               text: 'inger',
@@ -221,6 +252,8 @@ class _LoginPageState extends State<LoginPage> {
                   _emailPasswordWidget(),
                   SizedBox(height: 20),
                   _submitButton(),
+                  SizedBox(height: 20),
+                  _anonymousButton(),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,

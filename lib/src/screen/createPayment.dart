@@ -1,6 +1,6 @@
 import 'package:fingerpay/src/screen/paymentScanningPage.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:fingerpay/src/widget/cal_button.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -45,11 +45,16 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        if (_expression == ''){
+        if (_expression == '') {
           _expression = '0';
         }
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PaymentScanPage(pay: _pay, amount: double.parse(_expression),)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PaymentScanPage(
+                      pay: _pay,
+                      amount: double.parse(_expression),
+                    )));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -123,9 +128,9 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
                         labels: ['Pay', 'Recieve'],
                         icons: [Icons.send, Icons.border_color],
                         onToggle: (index) {
-                          if(index == 1){
+                          if (index == 1) {
                             _pay = false;
-                          }else{
+                          } else {
                             _pay = true;
                           }
                           print('switched to: $index');
@@ -167,12 +172,12 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
                     padding: const EdgeInsets.only(right: 12),
                     child: Text(
                       _history,
-                      style: GoogleFonts.rubik(
-                        textStyle: TextStyle(
-                          fontSize: 24,
-                          color: Color(0xFF545F61),
-                        ),
-                      ),
+                      // style: GoogleFonts.rubik(
+                      //   textStyle: TextStyle(
+                      //     fontSize: 24,
+                      //     color: Color(0xFF545F61),
+                      //   ),
+                      // ),
                     ),
                   ),
                   alignment: Alignment(1.0, 1.0),
@@ -182,12 +187,12 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
                     padding: const EdgeInsets.all(12),
                     child: Text(
                       _expression,
-                      style: GoogleFonts.rubik(
-                        textStyle: TextStyle(
-                          fontSize: 48,
-                          color: Colors.white,
-                        ),
-                      ),
+                      // style: GoogleFonts.rubik(
+                      //   textStyle: TextStyle(
+                      //     fontSize: 48,
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
                     ),
                   ),
                   alignment: Alignment(1.0, 1.0),

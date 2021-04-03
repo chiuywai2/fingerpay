@@ -49,6 +49,13 @@ class AuthService {
     await currentuser.reload();
   }
 
+  Future<String> anonymousLogin() async {
+    final userCredential = await FirebaseAuth.instance.signInAnonymously();
+    await DatabaseService(uid: userCredential.user.uid)
+        .updateUserData(0, 'Anonymous', '00000000');
+    return userCredential.user.uid;
+  }
+
   // Sign in with email and password
   Future<String> sinInWithEmailAndPassword(
       String email, String password) async {

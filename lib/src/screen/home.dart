@@ -10,7 +10,7 @@ import 'package:fingerpay/src/screen/topUp.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
 import 'package:fingerpay/src/models/user.dart';
 import 'createPayment.dart';
-import 'package:fingerpay/src/screen/acceptPayment.dart';
+import 'package:fingerpay/src/screen/acceptScanningPage.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 class HomePage extends StatefulWidget {
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AcceptPay(
+                          builder: (context) => AcceptScanPage(
                                 encrpytedtext: qrCode,
                               )));
                 },

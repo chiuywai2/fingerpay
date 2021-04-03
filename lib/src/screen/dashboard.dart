@@ -7,9 +7,9 @@ import 'package:fingerpay/src/common.dart';
 import 'package:fingerpay/src/widget/cards.dart';
 import 'package:fingerpay/src/widget/historyItem.dart';
 import 'package:fingerpay/src/widget/provider_widget.dart';
+import 'acceptScanningPage.dart';
 import 'createPayment.dart';
 import 'myCard.dart';
-import 'package:fingerpay/src/screen/acceptPayment.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 class Dashboard extends StatefulWidget {
@@ -158,7 +158,7 @@ class _DashboardState extends State<Dashboard> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AcceptPay(
+                                          builder: (context) => AcceptScanPage(
                                                 encrpytedtext: qrCode,
                                               )));
                                 },

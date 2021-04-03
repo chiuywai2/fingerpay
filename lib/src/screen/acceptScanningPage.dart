@@ -1,4 +1,3 @@
-import 'package:fingerpay/src/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'acceptPayment.dart';
 
@@ -38,7 +37,6 @@ class _AcceptScanPageState extends State<AcceptScanPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () async {
-        String uid = await AuthService().getCurrentUID();
         await Navigator.push(
             context,
             MaterialPageRoute(

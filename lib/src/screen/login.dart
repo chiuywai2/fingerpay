@@ -3,6 +3,7 @@ import 'package:fingerpay/src/screen/signup.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:fingerpay/src/widget/bezierContainer.dart';
 import 'package:fingerpay/src/service/auth_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -14,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String _email;
+  String _password;
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -96,10 +99,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () async {
-        String uid =
-            await AuthService().sinInWithEmailAndPassword(_email, _password);
-        print("Signed In with ID $uid");
-        Navigator.pop(context);
+        if (_email != null && _password != null) {
+          String uid =
+              await AuthService().sinInWithEmailAndPassword(_email, _password);
+          print("Signed In with ID $uid");
+          Navigator.pop(context);
+        } else {
+          Fluttertoast.showToast(
+            msg: "Email or Password cannot be null",
+            gravity: ToastGravity.CENTER,
+          );
+        }
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -223,9 +233,6 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-
-  String _email;
-  String _password;
 
   @override
   Widget build(BuildContext context) {
